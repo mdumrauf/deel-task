@@ -1,6 +1,6 @@
 const request = require('supertest');
 
-describe('Admin routes', function () {
+describe('Admin API', function () {
   it('responds with json', function (done) {
     request(app)
       .get('/user')
