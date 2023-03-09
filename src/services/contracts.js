@@ -19,14 +19,19 @@ async function findById(id) {
       },
     ],
   });
+  const client = contract.Client;
+  const contractor = contract.Contractor;
+
   return {
     id: contract.id,
     createdAt: contract.createdAt,
     updatedAt: contract.updatedAt,
     status: contract.status,
     terms: contract.terms,
-    client: `${contract.Client.firstName} ${contract.Client.lastName}`,
-    contractor: `${contract.Client.firstName} ${contract.Client.lastName}`,
+    clientId: client.id,
+    client: `${client.firstName} ${client.lastName}`,
+    contractorId: contractor.id,
+    contractor: `${contractor.firstName} ${contractor.lastName}`,
   };
 }
 
