@@ -6,7 +6,7 @@ const { Contract, Job, Profile } = require('../model');
  * Finds a {Job} by id.
  *
  * @param {Number} id
- * @returns {Contract}
+ * @returns {Job}
  */
 async function findById(id) {
   const job = await Job.findByPk(id, {
