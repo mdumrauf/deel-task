@@ -19,7 +19,10 @@ async function getAllUnpaid(req, res) {
  * @param {Response} res
  */
 async function pay(req, res) {
-  const { id } = req.params;
+  const {
+    params: { id },
+    profile,
+  } = req;
 
   const job = await Service.findById(id);
 
@@ -27,12 +30,17 @@ async function pay(req, res) {
     return res.status(404).send({ error: 'Job not found' }).end();
   }
 
-  if (!job.belongsTo(req.profile)) {
+  if (!job.belongsTo(profile)) {
     return res.status(404).send({ error: 'Job not found' }).end();
   }
 
-  if (!job.isClient(req.profile)) {
+  if (!job.isClient(profile)) {
     return res.status(403).send({ error: 'Only the client can pay for the job' }).end();
+  }
+
+  if (!profile.canPay(job)) {
+    const error = `Not enough funds to pay for the job. Needed $${job.price}, but balance is $${profile.balance}.`;
+    return res.status(409).send({ error }).end();
   }
 
   res.status(201).send(job).end();

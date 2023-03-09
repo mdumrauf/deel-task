@@ -5,7 +5,17 @@ const sequelize = new Sequelize({
   storage: './database.sqlite3',
 });
 
-class Profile extends Sequelize.Model {}
+class Profile extends Sequelize.Model {
+  /**
+   * Checks if it can pay for the given {Job}.
+   *
+   * @param {Job} job
+   * @returns true or false
+   */
+  canPay(job) {
+    return this.balance >= job.price;
+  }
+}
 Profile.init(
   {
     firstName: {

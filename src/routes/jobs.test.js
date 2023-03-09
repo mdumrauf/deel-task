@@ -119,8 +119,19 @@ describe('Jobs API', () => {
         );
     });
 
-    it('returns 409 if job cannot be paid because client does not have money', async () => {
-      //
+    it('returns 409 if job cannot be paid because client does not have money', (done) => {
+      request(app)
+        .post('/jobs/5/pay')
+        .set('Accept', 'application/json')
+        // ClientId is 4 and ContractorId is 7
+        .set('profile_id', '4')
+        .expect(
+          409,
+          {
+            error: 'Not enough funds to pay for the job. Needed $200, but balance is $1.3.',
+          },
+          done
+        );
     });
   });
 });

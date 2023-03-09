@@ -73,6 +73,25 @@ async function findAllUnpaidByProfileId(profileId) {
   }));
 }
 
+/**
+ * Updates a {Job} by id.
+ *
+ * @param {Number} id
+ * @returns {Contract}
+ */
+async function updateById(id) {
+  const job = await Job.update(
+    {
+      where: {
+        id,
+        paid: { [Op.not]: true, },
+
+      }
+    }
+  );
+  return job;
+}
+
 module.exports = {
   findById,
   findAllUnpaidByProfileId,
