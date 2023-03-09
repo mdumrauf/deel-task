@@ -54,7 +54,7 @@ async function pay(req, res) {
   await Service.updateById(id, update);
   const updatedJob = await Service.findById(id);
   const balance = profile.balance - job.price;
-  profile.update({ balance: balance.toFixed(2) });
+  await profile.update({ balance: balance.toFixed(2) });
 
   res.status(201).send(updatedJob).end();
 }
