@@ -1,14 +1,26 @@
 const Service = require('../services/contracts');
 
 /**
- * Checks if contract belongs to logged user.
+ * Picks the exposed attributes for a Contract.
  *
  * @param {Contract} contract
- * @param {Profile} profile
- * @returns true or false
+ * @returns simplified contract
  */
-function belongsToLoggedUser(contract, profile) {
-  return profile.id === contract.clientId || profile.id === contract.contractorId;
+function toSimplifiedContract(contract) {
+  const client = contract.Client;
+  const contractor = contract.Contractor;
+
+  return {
+    id: contract.id,
+    createdAt: contract.createdAt,
+    updatedAt: contract.updatedAt,
+    status: contract.status,
+    terms: contract.terms,
+    clientId: client.id,
+    client: `${client.firstName} ${client.lastName}`,
+    contractorId: contractor.id,
+    contractor: `${contractor.firstName} ${contractor.lastName}`,
+  };
 }
 
 /**
@@ -27,11 +39,11 @@ async function findById(req, res) {
     return res.status(404).send({ error: 'Contract not found' }).end();
   }
 
-  if (!belongsToLoggedUser(contract, req.profile)) {
+  if (!contract.belongsTo(req.profile)) {
     return res.status(404).send({ error: 'Contract not found' }).end();
   }
 
-  res.json(contract);
+  res.json(toSimplifiedContract(contract));
 }
 
 /**
@@ -42,8 +54,8 @@ async function findById(req, res) {
  */
 async function findAllByProfileId(req, res) {
   const contracts = await Service.findAllByProfileId(req.profile.id);
-
-  res.json(contracts);
+  const simplifiedContracts = contracts.map(toSimplifiedContract);
+  res.json(simplifiedContracts);
 }
 
 module.exports = {

@@ -3,29 +3,6 @@ const { Op } = require('sequelize');
 const { Contract, Profile } = require('../model');
 
 /**
- * Picks the exposed attributes for a Contract.
- *
- * @param {Contract} contract
- * @returns simplified contract
- */
-function toSimplifiedContract(contract) {
-  const client = contract.Client;
-  const contractor = contract.Contractor;
-
-  return {
-    id: contract.id,
-    createdAt: contract.createdAt,
-    updatedAt: contract.updatedAt,
-    status: contract.status,
-    terms: contract.terms,
-    clientId: client.id,
-    client: `${client.firstName} ${client.lastName}`,
-    contractorId: contractor.id,
-    contractor: `${contractor.firstName} ${contractor.lastName}`,
-  };
-}
-
-/**
  * Finds a {Contract} by id.
  *
  * @param {Number} id
@@ -44,7 +21,7 @@ async function findById(id) {
       },
     ],
   });
-  return contract && toSimplifiedContract(contract);
+  return contract;
 }
 
 /**
@@ -70,7 +47,7 @@ async function findAllByProfileId(profileId) {
       },
     ],
   });
-  return contracts.map(toSimplifiedContract);
+  return contracts;
 }
 
 module.exports = {

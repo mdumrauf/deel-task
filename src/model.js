@@ -33,7 +33,18 @@ Profile.init(
   }
 );
 
-class Contract extends Sequelize.Model {}
+class Contract extends Sequelize.Model {
+  /**
+   * Checks if contract belongs to given profile.
+   *
+   * @param {Profile} profile
+   * @returns true or false
+   */
+  belongsTo(profile) {
+    return profile.id === this.ClientId || profile.id === this.ContractorId;
+  }
+}
+
 Contract.init(
   {
     terms: {
