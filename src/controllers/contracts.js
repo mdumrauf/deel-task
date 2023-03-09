@@ -24,7 +24,7 @@ async function findById(req, res) {
   const contract = await Service.findById(id);
 
   if (!contract) {
-    return res.status(404).end();
+    return res.status(404).send({ error: 'Contract not found' }).end();
   }
 
   if (!belongsToLoggedUser(contract, req.profile)) {

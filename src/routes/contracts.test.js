@@ -25,6 +25,19 @@ describe('Contracts API', () => {
         );
     });
 
+    it('fails with 404 if contract does not exist', (done) => {
+      request(app)
+        .get('/contracts/42')
+        .set('Accept', 'application/json')
+        .set('profile_id', '1')
+        .expect(
+          404,
+          {
+            error: 'Contract not found',
+          },
+          done
+        );
+    });
     it('fails with 403 if contract is not from the logged profile_id', (done) => {
       request(app)
         .get('/contracts/4') // Belongs to Client: 2

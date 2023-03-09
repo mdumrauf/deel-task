@@ -44,7 +44,7 @@ async function findById(id) {
       },
     ],
   });
-  return toSimplifiedContract(contract);
+  return contract && toSimplifiedContract(contract);
 }
 
 /**
