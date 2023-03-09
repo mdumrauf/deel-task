@@ -34,6 +34,19 @@ async function findById(req, res) {
   res.json(contract);
 }
 
+/**
+ * Obtains all non-terminated contracts for the logged user.
+ *
+ * @param {Request} req
+ * @param {Response} res
+ */
+async function findAllByProfileId(req, res) {
+  const contracts = await Service.findAllByProfileId(req.profile.id);
+
+  res.json(contracts);
+}
+
 module.exports = {
   findById,
+  findAllByProfileId,
 };
