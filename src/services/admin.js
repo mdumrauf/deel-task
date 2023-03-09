@@ -51,14 +51,54 @@ async function getBestProfession(start, end) {
 }
 
 /**
- * Returns the clients the paid the most for jobs in the query time period.
+ * Returns the clients that paid the most for jobs in the query time period.
  * limit query parameter should be applied, default limit is 2.
  *
  * @param {Request} req
  * @param {Response} res
  */
-async function getBestClients(req, res) {}
+async function getBestClients(start, end, limit) {
+  const where = {
+    paid: { [Op.is]: true },
+  };
 
+  if (start && end) {
+    where.paymentDate = { [Op.between]: [start, end] };
+  } else if (start && !end) {
+    where.paymentDate = { [Op.gte]: start };
+  } else if (!start && end) {
+    where.paymentDate = { [Op.lte]: end };
+  }
+
+  const clients = await Job.findAll({
+    where,
+    limit,
+    attributes: [
+      'Contract.Client.id',
+      'Contract.Client.firstName',
+      'Contract.Client.lastName',
+      [sequelize.fn('sum', sequelize.col('price')), 'total'],
+    ],
+    group: ['Contract.Client.id'],
+    raw: true,
+    order: sequelize.literal('total DESC'),
+    include: {
+      model: Contract,
+      as: 'Contract',
+      include: [
+        {
+          model: Profile,
+          as: 'Client',
+          where: {
+            type: 'client',
+          },
+        },
+      ],
+    },
+  });
+
+  return clients.map(({ id, firstName, lastName, total }) => ({ id, firstName, lastName, total }));
+}
 module.exports = {
   getBestProfession,
   getBestClients,

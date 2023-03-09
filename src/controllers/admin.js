@@ -1,5 +1,7 @@
 const Service = require('../services/admin');
 
+const DEFAULT_LIMIT = 2;
+
 /**
  * Returns the profession that earned the most money (sum of jobs paid)
  * for any contactor that worked in the query time range.
@@ -19,7 +21,13 @@ async function getBestProfession(req, res) {
  * @param {Request} req
  * @param {Response} res
  */
-async function getBestClients(req, res) {}
+async function getBestClients(req, res) {
+  const { start, end, limit } = req.query;
+  const clientLimit = limit || DEFAULT_LIMIT;
+
+  const clients = await Service.getBestClients(start, end, clientLimit);
+  res.json(clients);
+}
 
 module.exports = {
   getBestProfession,
