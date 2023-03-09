@@ -38,6 +38,7 @@ describe('Contracts API', () => {
           done
         );
     });
+
     it('fails with 404 if contract is not from the logged profile_id', (done) => {
       request(app)
         .get('/contracts/4') // Belongs to Client: 2

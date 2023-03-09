@@ -61,7 +61,17 @@ Contract.init(
   }
 );
 
-class Job extends Sequelize.Model {}
+class Job extends Sequelize.Model {
+  /**
+   * Checks if job belongs to given profile.
+   *
+   * @param {Profile} profile
+   * @returns true or false
+   */
+  belongsTo(profile) {
+    return profile.id === this.Contract.ClientId || profile.id === this.Contract.ContractorId;
+  }
+}
 Job.init(
   {
     description: {

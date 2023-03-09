@@ -69,4 +69,58 @@ describe('Jobs API', () => {
         .expect(200, [], done);
     });
   });
+
+  describe('POST /jobs/:id/pay', () => {
+    it('returns 201 if payment was sucessful', async () => {
+      //
+    });
+
+    it('returns 403 if the one trying to pay is not the client', (done) => {
+      request(app)
+        .post('/jobs/3/pay')
+        .set('Accept', 'application/json')
+        // ClientId is 2 and ContractorId is 6
+        .set('profile_id', '6')
+        .expect(
+          403,
+          {
+            error: 'Only the client can pay for the job',
+          },
+          done
+        );
+    });
+
+    it('returns 404 if job is not found', (done) => {
+      request(app)
+        .post('/jobs/42/pay')
+        .set('Accept', 'application/json')
+        .set('profile_id', '1')
+        .expect(
+          404,
+          {
+            error: 'Job not found',
+          },
+          done
+        );
+    });
+
+    it('returns 404 if job is not being accessed by its client or contractor', (done) => {
+      request(app)
+        .post('/jobs/3/pay')
+        .set('Accept', 'application/json')
+        // ClientId is 2 and ContractorId is 6
+        .set('profile_id', '1')
+        .expect(
+          404,
+          {
+            error: 'Job not found',
+          },
+          done
+        );
+    });
+
+    it('returns 409 if job cannot be paid because client does not have money', async () => {
+      //
+    });
+  });
 });

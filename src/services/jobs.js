@@ -3,6 +3,32 @@ const { Op } = require('sequelize');
 const { Contract, Job, Profile } = require('../model');
 
 /**
+ * Finds a {Job} by id.
+ *
+ * @param {Number} id
+ * @returns {Contract}
+ */
+async function findById(id) {
+  const job = await Job.findByPk(id, {
+    include: {
+      model: Contract,
+      as: 'Contract',
+      include: [
+        {
+          model: Profile,
+          as: 'Contractor',
+        },
+        {
+          model: Profile,
+          as: 'Client',
+        },
+      ],
+    },
+  });
+  return job;
+}
+
+/**
  * Finds all unpaid {Job}s for a given profileId. Can be either
  * client or contractor.
  *
@@ -48,5 +74,6 @@ async function findAllUnpaidByProfileId(profileId) {
 }
 
 module.exports = {
+  findById,
   findAllUnpaidByProfileId,
 };
