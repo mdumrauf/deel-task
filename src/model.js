@@ -91,6 +91,14 @@ class Job extends Sequelize.Model {
   isClient(profile) {
     return profile.id === this.Contract.ClientId;
   }
+
+  /**
+   * Checks if job is paid
+   * @returns true or false
+   */
+  isPaid() {
+    return this.paid;
+  }
 }
 Job.init(
   {

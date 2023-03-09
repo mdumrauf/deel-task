@@ -38,6 +38,10 @@ async function pay(req, res) {
     return res.status(403).send({ error: 'Only the client can pay for the job' }).end();
   }
 
+  if (job.isPaid()) {
+    return res.status(400).send({ error: 'Job was already paid' }).end();
+  }
+
   if (!profile.canPay(job)) {
     const error = `Not enough funds to pay for the job. Needed $${job.price}, but balance is $${profile.balance}.`;
     return res.status(409).send({ error }).end();

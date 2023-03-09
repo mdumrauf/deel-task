@@ -119,6 +119,21 @@ describe('Jobs API', () => {
         );
     });
 
+    it('returns 400 if job is already paid', (done) => {
+      request(app)
+        .post('/jobs/6/pay')
+        .set('Accept', 'application/json')
+        // ClientId is 4 and ContractorId is 7
+        .set('profile_id', '4')
+        .expect(
+          400,
+          {
+            error: 'Job was already paid',
+          },
+          done
+        );
+    });
+
     it('returns 409 if job cannot be paid because client does not have money', (done) => {
       request(app)
         .post('/jobs/5/pay')
