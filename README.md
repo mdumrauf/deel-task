@@ -1,4 +1,4 @@
-# DEEL BACKEND TASK
+[![Node.js CI](https://github.com/mdumrauf/deel-task/actions/workflows/node.js.yml/badge.svg)](https://github.com/mdumrauf/deel-task/actions/workflows/node.js.yml)
 
   
 
