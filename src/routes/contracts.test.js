@@ -12,8 +12,8 @@ describe('Contracts API', () => {
           200,
           {
             id: 8,
-            createdAt: '2023-03-08T01:27:43.794Z',
-            updatedAt: '2023-03-08T01:27:43.794Z',
+            createdAt: expect.any(String),
+            updatedAt: expect.any(String),
             status: 'in_progress',
             terms: 'bla bla bla',
             clientId: 4,
@@ -65,8 +65,8 @@ describe('Contracts API', () => {
           [
             {
               id: 2,
-              createdAt: '2023-03-08T01:27:43.794Z',
-              updatedAt: '2023-03-08T01:27:43.794Z',
+              createdAt: expect.any(String),
+              updatedAt: expect.any(String),
               status: 'in_progress',
               terms: 'bla bla bla',
               clientId: 1,
@@ -89,8 +89,8 @@ describe('Contracts API', () => {
           [
             {
               id: 2,
-              createdAt: '2023-03-08T01:27:43.794Z',
-              updatedAt: '2023-03-08T01:27:43.794Z',
+              createdAt: expect.any(String),
+              updatedAt: expect.any(String),
               status: 'in_progress',
               terms: 'bla bla bla',
               clientId: 1,
@@ -100,8 +100,8 @@ describe('Contracts API', () => {
             },
             {
               id: 3,
-              createdAt: '2023-03-08T01:27:43.794Z',
-              updatedAt: '2023-03-08T01:27:43.794Z',
+              createdAt: expect.any(String),
+              updatedAt: expect.any(String),
               status: 'in_progress',
               terms: 'bla bla bla',
               clientId: 2,
@@ -111,8 +111,8 @@ describe('Contracts API', () => {
             },
             {
               id: 8,
-              createdAt: '2023-03-08T01:27:43.794Z',
-              updatedAt: '2023-03-08T01:27:43.794Z',
+              createdAt: expect.any(String),
+              updatedAt: expect.any(String),
               status: 'in_progress',
               terms: 'bla bla bla',
               clientId: 4,
