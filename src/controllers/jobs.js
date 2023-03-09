@@ -31,6 +31,10 @@ async function pay(req, res) {
     return res.status(404).send({ error: 'Job not found' }).end();
   }
 
+  if (!job.isClient(req.profile)) {
+    return res.status(403).send({ error: 'Only the client can pay for the job' }).end();
+  }
+
   res.status(201).send(job).end();
 }
 

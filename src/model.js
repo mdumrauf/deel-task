@@ -71,6 +71,16 @@ class Job extends Sequelize.Model {
   belongsTo(profile) {
     return profile.id === this.Contract.ClientId || profile.id === this.Contract.ContractorId;
   }
+
+  /**
+   * Checks if the given profile is the Client that owns the job.
+   *
+   * @param {Profile} profile
+   * @returns true or false
+   */
+  isClient(profile) {
+    return profile.id === this.Contract.ClientId;
+  }
 }
 Job.init(
   {
