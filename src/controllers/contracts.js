@@ -28,7 +28,7 @@ async function findById(req, res) {
   }
 
   if (!belongsToLoggedUser(contract, req.profile)) {
-    return res.status(403).send({ error: 'Forbidden access' }).end();
+    return res.status(404).send({ error: 'Contract not found' }).end();
   }
 
   res.json(contract);

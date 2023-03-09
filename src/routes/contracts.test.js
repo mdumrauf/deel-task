@@ -38,15 +38,15 @@ describe('Contracts API', () => {
           done
         );
     });
-    it('fails with 403 if contract is not from the logged profile_id', (done) => {
+    it('fails with 404 if contract is not from the logged profile_id', (done) => {
       request(app)
         .get('/contracts/4') // Belongs to Client: 2
         .set('Accept', 'application/json')
         .set('profile_id', '1')
         .expect(
-          403,
+          404,
           {
-            error: 'Forbidden access',
+            error: 'Contract not found',
           },
           done
         );
