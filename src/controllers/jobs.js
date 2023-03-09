@@ -47,7 +47,16 @@ async function pay(req, res) {
     return res.status(409).send({ error }).end();
   }
 
-  res.status(201).send(job).end();
+  const update = {
+    paid: true,
+    paymentDate: new Date(),
+  };
+  await Service.updateById(id, update);
+  const updatedJob = await Service.findById(id);
+  const balance = profile.balance - job.price;
+  profile.update({ balance: balance.toFixed(2) });
+
+  res.status(201).send(updatedJob).end();
 }
 
 module.exports = {

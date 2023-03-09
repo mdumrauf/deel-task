@@ -77,22 +77,19 @@ async function findAllUnpaidByProfileId(profileId) {
  * Updates a {Job} by id.
  *
  * @param {Number} id
+ * @param {Partial<Job>} job
  * @returns {Contract}
  */
-async function updateById(id) {
-  const job = await Job.update(
-    {
-      where: {
-        id,
-        paid: { [Op.not]: true, },
-
-      }
-    }
-  );
-  return job;
+async function updateById(id, job) {
+  return await Job.update(job, {
+    where: {
+      id,
+    },
+  });
 }
 
 module.exports = {
   findById,
   findAllUnpaidByProfileId,
+  updateById,
 };

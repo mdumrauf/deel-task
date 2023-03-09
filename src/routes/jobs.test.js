@@ -1,5 +1,6 @@
 const request = require('supertest');
 const app = require('../app');
+const { Profile } = require('../model');
 
 describe('Jobs API', () => {
   describe('GET /jobs/unpaid', () => {
@@ -72,7 +73,16 @@ describe('Jobs API', () => {
 
   describe('POST /jobs/:id/pay', () => {
     it('returns 201 if payment was sucessful', async () => {
-      //
+      await request(app)
+        .post('/jobs/3/pay')
+        .set('Accept', 'application/json')
+        // ClientId is 2 and ContractorId is 6
+        .set('profile_id', '2')
+        .expect(201);
+
+      // Check Client's balance
+      const client = await Profile.findByPk(2);
+      expect(client.balance).toBe(29.11);
     });
 
     it('returns 403 if the one trying to pay is not the client', (done) => {
