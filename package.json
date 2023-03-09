@@ -30,6 +30,9 @@
   },
   "engineStrict": true,
   "jest": {
+    "setupFilesAfterEnv": [
+      "<rootDir>/scripts/seedDb.js"
+    ],
     "testEnvironment": "node",
     "coveragePathIgnorePatterns": [
       "/node_modules/"
